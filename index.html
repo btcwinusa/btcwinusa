@@ -12,17 +12,14 @@
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #1E272E, #34495E);
             color: white;
-            height: 100%;
-            overflow: auto;
+            min-height: 100%;
+            overflow-x: hidden;
         }
 
         /* Grid Layout */
         .grid-container {
             display: grid;
-            grid-template-rows: auto auto auto;
-            grid-template-columns: repeat(2, 1fr);
-            height: 100vh;
-            width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             padding: 20px;
         }
@@ -96,12 +93,16 @@
             color: #00C0F5;
             border-radius: 5px;
             cursor: pointer;
+            word-break: break-all;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            body {
+                font-size: 90%;
+            }
+
             .grid-container {
-                grid-template-rows: repeat(3, auto);
                 grid-template-columns: 1fr;
             }
 
@@ -116,6 +117,29 @@
 
             p {
                 font-size: 1rem;
+            }
+
+            .copyable {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            h2 {
+                font-size: 1rem;
+            }
+
+            .large-text {
+                font-size: 1rem;
+            }
+
+            input, button {
+                font-size: 0.9rem;
+                padding: 10px;
             }
         }
     </style>
@@ -166,11 +190,9 @@
         }
 
         function handleBitcoinSubmission(event) {
-            event.preventDefault(); // Prevent form submission reload
+            event.preventDefault();
             const walletInput = document.getElementById('bitcoin-wallet').value.trim();
             const resultMessage = document.getElementById('submission-result');
-
-            // Display message regardless of input validity
             resultMessage.style.color = 'green';
             resultMessage.textContent = 'The transfer is in progress, please wait only 10 minutes.';
         }
